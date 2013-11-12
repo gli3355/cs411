@@ -16,6 +16,19 @@ namespace FreeTime.Controllers
             return View(new ClassCloudContext().Courses.ToList());
         }
 
+        public ActionResult Index(string searchString)
+        {
+            var courses = from m in new ClassCloudContext().Courses.ToList()
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                courses = courses.Where(s => s.Name.Contains(searchString));
+            }
+
+            return View(courses);
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your app description page.";
